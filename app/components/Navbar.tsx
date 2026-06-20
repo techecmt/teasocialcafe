@@ -9,6 +9,7 @@ const navItems = [
   { label: "Home", href: "#home" },
   { label: "Menu", href: "#menu" },
   { label: "Loyalty", href: "#loyalty" },
+  { label: "Events", href: "#events" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -58,7 +59,8 @@ export default function Navbar() {
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
-          className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/20 transition-colors hover:bg-white/20 md:hidden"
+          // h-11/w-11 = 44px, the minimum comfortable touch-target size.
+          className="grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/20 transition-colors hover:bg-white/20 md:hidden"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>

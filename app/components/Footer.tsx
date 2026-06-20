@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="mt-20">
       <div className="h-[3px] bg-linear-to-r from-(--brand) via-(--brand-accent) to-(--brand)" />
-      <div className="mx-auto max-w-6xl px-4 py-10 grid gap-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-10 md:grid-cols-3">
         <div>
           <h3 className="font-heading mb-3 text-lg text-(--brand) dark:text-(--brand-accent)">Tea Social Cafe</h3>
           <h4 className="mb-2 text-sm font-semibold tracking-wider text-zinc-600 dark:text-zinc-300">About</h4>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Sansita_Swashed, Lexend_Zetta } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -20,6 +20,15 @@ export const metadata: Metadata = {
   title: "Tea Social Cafe | Authentic Bubble Tea in Doha",
   description: "Bubble tea, specialty coffee and snacks in Mirage Residence, Doha. Join our loyalty program!",
   metadataBase: new URL("https://teasocialcafe.example"),
+};
+
+// Mobile viewport: `viewportFit: "cover"` lets content extend into the safe
+// areas on notched phones, and `themeColor` tints the browser UI to match the navbar.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#062b2a",
 };
 
 export default function RootLayout({

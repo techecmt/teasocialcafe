@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 type Tag = "span" | "h1" | "h2" | "h3" | "p";
 
 /**
- * Splits text into words/characters and reveals them with a stepped
- * (frame-by-frame, flipbook-style) keyframe animation as it scrolls into view.
+ * Reveals text with a stepped, frame-by-frame keyframe as it scrolls into view.
+ * Always splits on words first (so words never break across a line and stay
+ * properly spaced); in "char" mode each word is further split into letters for
+ * a per-letter reveal.
  */
 export default function FrameText({
   text,
@@ -43,17 +45,31 @@ export default function FrameText({
     return () => observer.disconnect();
   }, [once]);
 
-  const units = splitBy === "char" ? Array.from(text) : text.split(" ");
+  const words = text.split(" ");
   const Component = as as React.ElementType;
+  let delayIndex = 0;
 
   return (
     <Component ref={ref} className={`frame-text${inView ? " in-view" : ""} ${className}`}>
-      {units.map((unit, i) => (
-        <span key={i} className="frame-text-unit" style={{ animationDelay: `${i * stagger}ms` }}>
-          {unit}
-          {splitBy === "word" && i < units.length - 1 ? " " : ""}
-        </span>
-      ))}
+      {words.map((word, wi) => {
+        const pieces = splitBy === "char" ? Array.from(word) : [word];
+        return (
+          <Fragment key={wi}>
+            <span className="frame-text-word">
+              {pieces.map((piece, pi) => (
+                <span
+                  key={pi}
+                  className="frame-text-unit"
+                  style={{ animationDelay: `${delayIndex++ * stagger}ms` }}
+                >
+                  {piece}
+                </span>
+              ))}
+            </span>
+            {wi < words.length - 1 ? " " : ""}
+          </Fragment>
+        );
+      })}
     </Component>
   );
 }

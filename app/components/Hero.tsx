@@ -5,9 +5,12 @@ import BobaPit from "./BobaPit";
 
 export default function Hero() {
   return (
+    // `min-h-[88svh]` (small viewport height) keeps the hero from clipping/jumping
+    // as the mobile browser's address bar shows and hides; the headline steps up
+    // from text-4xl on phones so it never overflows narrow (320px) screens.
     <section
       id="home"
-      className="relative isolate -mt-[72px] flex min-h-[88vh] items-center overflow-hidden pt-[72px]"
+      className="relative isolate -mt-[72px] flex min-h-[88svh] items-center overflow-hidden pt-[72px]"
       aria-label="Hero"
     >
       {/* Layered background: warm tea gradient → bouncing boba pearls → scrim */}
@@ -37,7 +40,7 @@ export default function Hero() {
           text="Authentic Bubble Tea"
           splitBy="char"
           stagger={20}
-          className="font-heading text-5xl [text-shadow:0_2px_24px_rgba(0,0,0,0.55)] md:text-8xl"
+          className="font-heading text-balance px-2 text-4xl leading-[1.08] [text-shadow:0_2px_24px_rgba(0,0,0,0.55)] sm:text-6xl md:text-8xl"
         />
         <Reveal delay={2}>
           <p className="max-w-2xl text-lg text-white/85 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">

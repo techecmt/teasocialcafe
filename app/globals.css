@@ -3,6 +3,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Mobile base: stop iOS/Android from auto-inflating text on rotate, and guard
+   against horizontal scroll from full-bleed animations and decorative blurs. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+html,
+body {
+  overflow-x: hidden;
+}
+
 :root {
   --brand: #0e7c7b; /* deep teal */
   --brand-accent: #ffd166; /* warm accent */
@@ -111,6 +122,12 @@
   100% { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
+/* Each word stays on one line; words wrap (and space) between each other. */
+.frame-text-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .frame-text-unit {
   display: inline-block;
   opacity: 0;
@@ -124,6 +141,39 @@
 @media (prefers-reduced-motion: reduce) {
   .frame-text-unit { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
+
+/* Interactive range slider (events form) — custom track fill + thumb. */
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--brand-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease;
+}
+.range-slider::-webkit-slider-thumb:hover { transform: scale(1.18); }
+.range-slider::-webkit-slider-thumb:active { transform: scale(1.05); }
+.range-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--brand-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+.range-slider:focus-visible::-webkit-slider-thumb { outline: 2px solid #fff; outline-offset: 2px; }
 
 /* Coffee-brewing accents: gentle bob on the icon badge + rising steam wisps. */
 @keyframes brew-float {
