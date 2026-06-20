@@ -125,6 +125,33 @@
   .frame-text-unit { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
 
+/* Coffee-brewing accents: gentle bob on the icon badge + rising steam wisps. */
+@keyframes brew-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.brew-float { animation: brew-float 3.5s ease-in-out infinite; }
+
+@keyframes steam {
+  0% { transform: translateY(6px) scaleX(0.8); opacity: 0; }
+  20% { opacity: 0.75; }
+  60% { opacity: 0.4; }
+  100% { transform: translateY(-18px) scaleX(1.5); opacity: 0; }
+}
+.steam-wisp {
+  width: 4px;
+  height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(to top, var(--brand), transparent);
+  opacity: 0;
+  animation: steam 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brew-float { animation: none; }
+  .steam-wisp { display: none; }
+}
+
 /* Warm section-heading accent underline, modern-cafe styling */
 .heading-accent {
   display: block;
