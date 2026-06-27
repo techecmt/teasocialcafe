@@ -541,17 +541,19 @@ function createPointerData(options: Partial<PointerData> & { domElement: HTMLEle
       document.body.addEventListener('pointerleave', onPointerLeave as EventListener);
       document.body.addEventListener('click', onPointerClick as EventListener);
 
+      // passive: these no longer call preventDefault, so the browser can scroll
+      // without waiting on them (avoids the blocking-listener jank on mobile).
       document.body.addEventListener('touchstart', onTouchStart as EventListener, {
-        passive: false
+        passive: true
       });
       document.body.addEventListener('touchmove', onTouchMove as EventListener, {
-        passive: false
+        passive: true
       });
       document.body.addEventListener('touchend', onTouchEnd as EventListener, {
-        passive: false
+        passive: true
       });
       document.body.addEventListener('touchcancel', onTouchEnd as EventListener, {
-        passive: false
+        passive: true
       });
       globalPointerActive = true;
     }
@@ -597,7 +599,10 @@ function processPointerInteraction() {
 
 function onTouchStart(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
+    // NOTE: do NOT preventDefault here. This is a document.body-level listener,
+    // so calling preventDefault on touchstart swallows the synthesized click for
+    // EVERY tap on the page (menu button, links, CTAs) — breaking the whole UI on
+    // mobile. The pearl follow below still works without hijacking the touch.
     pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
     for (const [elem, data] of pointerMap) {
       const rect = elem.getBoundingClientRect();
@@ -616,7 +621,8 @@ function onTouchStart(e: TouchEvent) {
 
 function onTouchMove(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
+    // Likewise no preventDefault: let the page scroll naturally when swiping over
+    // the hero. The pearls still follow the finger via the handlers below.
     pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
     for (const [elem, data] of pointerMap) {
       const rect = elem.getBoundingClientRect();

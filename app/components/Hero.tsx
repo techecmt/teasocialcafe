@@ -20,12 +20,12 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      <div className="pointer-events-none absolute right-4 bottom-4 z-10 md:right-12 md:bottom-12">
+      <div className="pointer-events-none absolute right-3 bottom-3 z-10 md:right-12 md:bottom-12">
         <CircularText
           text="BUBBLE TEA*SNACKS*COFFEE*"
           onHover="speedUp"
           spinDuration={20}
-          className="w-28 h-28 md:w-48 md:h-48 opacity-80"
+          className="w-20 h-20 sm:w-28 sm:h-28 md:w-48 md:h-48 opacity-80"
         />
       </div>
 
@@ -49,7 +49,7 @@ export default function Hero() {
         </Reveal>
         <Reveal delay={3}>
           <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-            <a href="#loyalty" className="hover-lift rounded-full bg-(--brand-accent) px-5 py-3 font-semibold text-[#073231] md:text-base">
+            <a href="https://app.boomingo.io/program/7551" className="hover-lift rounded-full bg-(--brand-accent) px-5 py-3 font-semibold text-[#073231] md:text-base">
               Join Loyalty Program
             </a>
             <a href="#menu" className="rounded-full border border-white/30 bg-white/5 px-5 py-3 font-medium backdrop-blur-sm hover:bg-white/15">
