@@ -10,6 +10,7 @@ const navItems = [
   { label: "Menu", href: "#menu" },
   { label: "Loyalty", href: "#loyalty" },
   { label: "Events", href: "/events-planning-in-qatar" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "#contact" },
 ];
 

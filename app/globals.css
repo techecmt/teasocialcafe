@@ -258,3 +258,49 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Long-form article (blog post) typography. Kept lightweight and brand-aligned
+   since the project has no typography plugin. Link styles are scoped to p/li so
+   they never override buttons inside embedded .not-prose blocks (e.g. the CTA). */
+.article {
+  color: #27272a; /* zinc-800 */
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+.article > * + * { margin-top: 1.25rem; }
+.article h2 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin-top: 2.75rem;
+  color: #062b2a;
+}
+.article h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  color: #062b2a;
+}
+.article p { text-wrap: pretty; }
+.article strong { color: #18181b; font-weight: 700; }
+.article em { font-style: italic; }
+.article ul { list-style: disc; padding-left: 1.4rem; }
+.article ul > li + li { margin-top: 0.6rem; }
+.article p a,
+.article li a {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.article p a:hover,
+.article li a:hover { color: #062b2a; }
+
+.dark .article { color: #d4d4d8; }
+.dark .article h2,
+.dark .article h3 { color: var(--brand-accent); }
+.dark .article strong { color: #fafafa; }
+.dark .article p a,
+.dark .article li a { color: var(--brand-accent); }
+.dark .article p a:hover,
+.dark .article li a:hover { color: #fff; }
