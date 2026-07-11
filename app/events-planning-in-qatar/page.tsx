@@ -25,33 +25,34 @@ import EventForm from "../components/EventForm";
 import StatCounter from "./StatCounter";
 import EventTypeTabs from "./EventTypeTabs";
 import FaqAccordion, { type Faq } from "./FaqAccordion";
+import { SITE_URL, BUSINESS_ID, KEYWORDS, jsonLdGraph } from "@/lib/seo";
 
 /* -------------------------------------------------------------------------- */
 /* SEO                                                                        */
 /* -------------------------------------------------------------------------- */
 
 export const metadata: Metadata = {
-  title: "Event Planning in Qatar | Birthday, Corporate & Hi-Tea Bookings | Tea Social Café",
+  // `absolute` bypasses the layout's "%s | Tea Social Cafe" template so the
+  // brand isn't appended twice.
+  title: { absolute: "Event Planning in Qatar | Birthdays, Corporate & Hi-Tea | Tea Social Cafe" },
   description:
-    "Book birthday parties, corporate events and hi-tea catchups at Tea Social Café in Doha, Qatar. Themed décor, handcrafted bubble tea & coffee menus, indoor & outdoor seating and friendly event staff. Enquire on WhatsApp today.",
-  keywords: [
-    "event planning Qatar",
-    "birthday party booking Doha",
-    "kids birthday party Qatar",
-    "corporate events Doha",
-    "hi-tea Qatar",
-    "bubble tea café Doha",
-    "party venue Mirage Residence",
-    "Tea Social Café events",
-  ],
+    "Book birthday parties, corporate events and hi-tea catchups at Tea Social Cafe in Doha, Qatar. Themed décor, handcrafted bubble tea & coffee menus, indoor & outdoor seating and friendly event staff. Enquire on WhatsApp today.",
+  keywords: [...KEYWORDS.events],
   alternates: { canonical: "/events-planning-in-qatar" },
   openGraph: {
-    title: "Event Planning in Qatar | Tea Social Café",
+    title: "Event Planning in Qatar | Tea Social Cafe",
     description:
       "Celebrate birthdays, corporate gatherings and hi-tea catchups at Doha's original bubble tea café. Book your event in Qatar today.",
     url: "/events-planning-in-qatar",
     type: "website",
-    images: [{ url: "/HeroImage.jpg", width: 1200, height: 630, alt: "Events at Tea Social Café, Doha" }],
+    images: [{ url: "/HeroImage.jpg", width: 1200, height: 630, alt: "Events at Tea Social Cafe, Doha" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Event Planning in Qatar | Tea Social Cafe",
+    description:
+      "Book birthdays, corporate events and hi-tea catchups at Doha's original bubble tea café. Enquire on WhatsApp today.",
+    images: ["/HeroImage.jpg"],
   },
 };
 
@@ -78,7 +79,7 @@ const whyUs = [
 const gallery = [
   // NOTE: swap these for real Qatar event/birthday photos by dropping them in
   // /public/events/ and updating the `src` paths below.
-  { src: "/HeroImage.jpg", alt: "Celebration setup at Tea Social Café" },
+  { src: "/HeroImage.jpg", alt: "Celebration setup at Tea Social Cafe" },
   { src: "/BubbleTea-Section-1.png", alt: "Signature bubble tea for parties" },
   { src: "/Coffee-section2.png", alt: "Craft coffee for corporate events" },
   { src: "/Snacks-section1.png", alt: "Fresh snacks and sweet treats" },
@@ -94,7 +95,7 @@ const testimonials = [
 
 const faqs: Faq[] = [
   {
-    q: "How do I book an event at Tea Social Café?",
+    q: "How do I book an event at Tea Social Cafe?",
     a: "Fill in the enquiry form on this page and it opens WhatsApp pre-filled with your details, or call us directly on +974 3030 3467. We'll confirm availability and walk you through the options.",
   },
   {
@@ -115,45 +116,39 @@ const faqs: Faq[] = [
   },
 ];
 
-/* JSON-LD structured data helps Google show rich results for the page. */
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "LocalBusiness",
-      name: "Tea Social Café",
-      image: "https://teasocialcafe.example/HeroImage.jpg",
-      "@id": "https://teasocialcafe.example/#business",
-      url: "https://teasocialcafe.example/events-planning-in-qatar",
-      telephone: "+974 3030 3467",
-      email: "info@teasocialcafe-qa.com",
-      priceRange: "$$",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Building 8 (Mirage Residence), Street 880",
-        addressLocality: "Doha",
-        addressCountry: "QA",
-      },
-      servesCuisine: ["Bubble Tea", "Coffee", "Snacks"],
-      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "500" },
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: faqs.map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://teasocialcafe.example/" },
-        { "@type": "ListItem", position: 2, name: "Event Planning in Qatar", item: "https://teasocialcafe.example/events-planning-in-qatar" },
-      ],
-    },
-  ],
-};
+/* JSON-LD structured data helps Google show rich results for the page. The
+   café's LocalBusiness node is emitted site-wide from the root layout, so here
+   we describe the page's own service, its FAQs and the breadcrumb trail. */
+const jsonLd = jsonLdGraph([
+  {
+    "@type": "Service",
+    name: "Event Planning in Qatar",
+    serviceType: "Event venue & party planning",
+    description:
+      "Birthday parties, corporate events and hi-tea catchups at Tea Social Cafe, Doha — themed décor, handcrafted bubble tea & coffee menus, indoor & outdoor seating and friendly event staff.",
+    provider: { "@id": BUSINESS_ID },
+    areaServed: [
+      { "@type": "City", name: "Doha" },
+      { "@type": "AdministrativeArea", name: "Qatar" },
+    ],
+    url: `${SITE_URL}/events-planning-in-qatar`,
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: "Event Planning in Qatar", item: `${SITE_URL}/events-planning-in-qatar` },
+    ],
+  },
+]);
 
 /* -------------------------------------------------------------------------- */
 /* Page                                                                       */
@@ -162,7 +157,7 @@ const jsonLd = {
 export default function EventsPlanningPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
 
       {/* ---------------------------------------------------------------- Hero */}
       <section className="relative isolate -mt-[72px] flex min-h-[78svh] items-center overflow-hidden pt-[72px]">
@@ -191,7 +186,7 @@ export default function EventsPlanningPage() {
           />
           <Reveal delay={2}>
             <p className="max-w-2xl text-base text-white/85 sm:text-lg [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
-              Birthday bashes, polished corporate gatherings and cosy hi-tea catchups — Tea Social Café is your go-to
+              Birthday bashes, polished corporate gatherings and cosy hi-tea catchups — Tea Social Cafe is your go-to
               event venue in Qatar.
             </p>
           </Reveal>

@@ -9,7 +9,7 @@ const navItems = [
   { label: "Home", href: "#home" },
   { label: "Menu", href: "#menu" },
   { label: "Loyalty", href: "#loyalty" },
-  { label: "Events", href: "#events" },
+  { label: "Events", href: "/events-planning-in-qatar" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -54,7 +54,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-2 rounded-full bg-white/10 px-2 py-1 text-xs shadow-lg ring-1 ring-white/20 backdrop-blur-md lg:flex">
           <span className="hidden pl-2 text-[11px] text-zinc-200 lg:inline">Call or WhatsApp</span>
           <a href="tel:+97430303467" className="hover-lift rounded-full bg-(--brand-accent) px-3 py-1.5 text-[11px] font-semibold text-[#073231]">+974 3030 3467</a>
-          <a href="mailto:Info@teasocialcafe-qa.com" className="rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-medium text-zinc-100 hover:bg-white/15">Email</a>
+          <a href="mailto:info@teasocialcafe-qa.com" className="rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-medium text-zinc-100 hover:bg-white/15">Email</a>
         </div>
 
         <button

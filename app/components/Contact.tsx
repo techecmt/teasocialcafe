@@ -12,7 +12,7 @@ export default function Contact() {
             <Reveal delay={1}>
               <ul className="mt-4 space-y-2 text-zinc-700 dark:text-zinc-300">
                 <li>Phone: <a className="underline" href="tel:+97430303467">+974 3030 3467</a></li>
-                <li>Email: <a className="underline" href="mailto:Info@teasocialcafe-qa.com">Info@teasocialcafe-qa.com</a></li>
+                <li>Email: <a className="underline" href="mailto:info@teasocialcafe-qa.com">info@teasocialcafe-qa.com</a></li>
                 <li>Address: Building 8, Street 880, Mirage Residence, Doha, Qatar</li>
               </ul>
             </Reveal>

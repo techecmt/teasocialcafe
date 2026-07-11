@@ -21,7 +21,7 @@ import FrameText from "./FrameText";
 const contacts = [
   { icon: MapPin, title: "Physical Address", lines: ["Building 8 (Mirage Residence), Street 880", "Doha, Qatar"] },
   { icon: Phone, title: "Phone Numbers", lines: ["+974 3030 3467"] },
-  { icon: Mail, title: "Email Address", lines: ["Info@teasocialcafe-qa.com"] },
+  { icon: Mail, title: "Email Address", lines: ["info@teasocialcafe-qa.com"] },
 ];
 
 const categories = [
@@ -53,7 +53,7 @@ export default function EventForm() {
     e.preventDefault();
     const eventType = needsOther ? `Others — ${other.trim() || "(unspecified)"}` : category;
     const lines = [
-      "Hi Tea Social Café! I'd like to enquire about hosting an event:",
+      "Hi Tea Social Cafe! I'd like to enquire about hosting an event:",
       `• Name: ${name}`,
       email && `• Email: ${email}`,
       phone && `• Phone: ${phone}`,
@@ -101,11 +101,11 @@ export default function EventForm() {
           <div className="order-1 md:order-2">
             <FrameText
               as="h2"
-              text="Make Your Event More Delicious with Tea Social Café"
+              text="Make Your Event More Delicious with Tea Social Cafe"
               className="font-heading block text-2xl leading-tight sm:text-3xl md:text-4xl"
             />
             <p className="mt-4 max-w-xl text-sm text-white/65">
-              Looking for the perfect place to host your next celebration? Tea Social Café is more than a chill spot —
+              Looking for the perfect place to host your next celebration? Tea Social Cafe is more than a chill spot —
               it&apos;s the ideal venue for creating unforgettable memories.
             </p>
 

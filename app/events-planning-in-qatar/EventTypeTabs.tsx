@@ -38,7 +38,7 @@ const EVENT_TYPES: EventType[] = [
     heading: "Professional Vibes, Comfortable Setting",
     tagline: "Where great conversations brew.",
     body:
-      "From team meetings and networking sessions to product launches and client dinners, Tea Social Café offers the ideal space for your next corporate gathering. Enjoy a relaxed atmosphere paired with our curated menu and attentive service — perfect for inspiring conversations and lasting impressions.",
+      "From team meetings and networking sessions to product launches and client dinners, Tea Social Cafe offers the ideal space for your next corporate gathering. Enjoy a relaxed atmosphere paired with our curated menu and attentive service — perfect for inspiring conversations and lasting impressions.",
     perks: [
       "Private & semi-private seating",
       "Curated catering & beverage packages",
