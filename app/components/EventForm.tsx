@@ -15,6 +15,8 @@ import {
   CalendarDays,
   Send,
   CheckCircle2,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 import FrameText from "./FrameText";
 
@@ -32,7 +34,10 @@ const categories = [
   { label: "Others", icon: Sparkles },
 ];
 
-const WHATSAPP_NUMBER = "97430303467";
+// Web3Forms access keys are public by design (the request is made from the
+// browser); the env var just makes it swappable per deployment.
+const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "895002bb-0b41-4545-98a0-694c8cdd3290";
 
 export default function EventForm() {
   const [persons, setPersons] = useState(10);
@@ -42,28 +47,57 @@ export default function EventForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
+  const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  // Honeypot — real users never tick this; bots that fill every field do.
+  const [botcheck, setBotcheck] = useState(false);
 
   // The persons icon grows with the group size — a little interactive flourish.
   const PersonIcon = persons <= 1 ? User : persons <= 12 ? Users : UsersRound;
   const pct = ((persons - 1) / (40 - 1)) * 100;
   const needsOther = category === "Others";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+
     const eventType = needsOther ? `Others — ${other.trim() || "(unspecified)"}` : category;
-    const lines = [
-      "Hi Tea Social Cafe! I'd like to enquire about hosting an event:",
-      `• Name: ${name}`,
-      email && `• Email: ${email}`,
-      phone && `• Phone: ${phone}`,
-      `• Guests: ${persons}`,
-      `• Event: ${eventType}`,
-      date && `• Preferred date: ${date}`,
-    ].filter(Boolean);
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-    setSent(true);
+    const guests = persons === 40 ? "40+" : String(persons);
+
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `Event enquiry — ${eventType} for ${guests} guests`,
+          from_name: "Tea Social Cafe website",
+          botcheck,
+          name,
+          email,
+          phone: phone || "Not provided",
+          guests,
+          event_type: eventType,
+          preferred_date: date || "Not specified",
+          message: message.trim() || "No additional details",
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.message ?? "Submission failed");
+      setSent(true);
+    } catch {
+      setError(
+        "We couldn't send your enquiry just now. Please try again, or call us on +974 3030 3467.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const fieldClass =
@@ -110,10 +144,14 @@ export default function EventForm() {
             </p>
 
             {sent ? (
-              <div className="mt-8 flex items-center gap-3 rounded-2xl border border-(--brand-accent)/40 bg-(--brand-accent)/10 p-5">
+              <div
+                role="status"
+                className="mt-8 flex items-center gap-3 rounded-2xl border border-(--brand-accent)/40 bg-(--brand-accent)/10 p-5"
+              >
                 <CheckCircle2 className="h-7 w-7 shrink-0 text-(--brand-accent)" />
                 <p className="text-sm text-white/85">
-                  Opening WhatsApp with your details — just hit send to reach us. We&apos;ll confirm your booking shortly!
+                  Thanks {name.split(" ")[0] || "so much"} — your enquiry is on its way to our team. We&apos;ll get back
+                  to you shortly to confirm your booking.
                 </p>
               </div>
             ) : (
@@ -124,8 +162,8 @@ export default function EventForm() {
                     <input id="ev-name" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className={fieldClass} />
                   </div>
                   <div>
-                    <label htmlFor="ev-email" className={labelClass}>Email Address</label>
-                    <input id="ev-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" className={fieldClass} />
+                    <label htmlFor="ev-email" className={labelClass}>Email Address *</label>
+                    <input id="ev-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" className={fieldClass} />
                   </div>
                 </div>
 
@@ -203,12 +241,46 @@ export default function EventForm() {
                   <input id="ev-date" type="date" value={date} onChange={(e) => setDate(e.target.value)} className={`${fieldClass} scheme-dark`} />
                 </div>
 
+                {/* Message */}
+                <div>
+                  <label htmlFor="ev-message" className={labelClass}>Anything else we should know?</label>
+                  <textarea
+                    id="ev-message"
+                    rows={3}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Décor themes, dietary needs, timings…"
+                    className={`${fieldClass} resize-y`}
+                  />
+                </div>
+
+                {/* Honeypot: hidden from users and assistive tech, catnip for bots. */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  checked={botcheck}
+                  onChange={(e) => setBotcheck(e.target.checked)}
+                  className="hidden"
+                />
+
+                {error && (
+                  <p role="alert" className="flex items-start gap-2 text-sm text-red-300">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    {error}
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  className="hover-lift inline-flex items-center gap-2 rounded-full bg-(--brand-accent) px-6 py-3 font-semibold text-[#073231]"
+                  disabled={submitting}
+                  aria-busy={submitting}
+                  className="hover-lift inline-flex items-center gap-2 rounded-full bg-(--brand-accent) px-6 py-3 font-semibold text-[#073231] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <Send className="h-4 w-4" />
-                  Send Message
+                  {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  {submitting ? "Sending…" : "Send Message"}
                 </button>
               </form>
             )}

@@ -96,7 +96,7 @@ const testimonials = [
 const faqs: Faq[] = [
   {
     q: "How do I book an event at Tea Social Cafe?",
-    a: "Fill in the enquiry form on this page and it opens WhatsApp pre-filled with your details, or call us directly on +974 3030 3467. We'll confirm availability and walk you through the options.",
+    a: "Fill in the enquiry form on this page and it goes straight to our events team, or call us directly on +974 3030 3467. We'll get back to you to confirm availability and walk you through the options.",
   },
   {
     q: "What types of events can you host?",
