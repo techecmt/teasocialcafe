@@ -2,21 +2,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import GooeyNav from "@/components/GooeyNav";
 
+// These fragments are root-relative on purpose. A bare "#home" resolves
+// against the *current* path, so from /blog it became /blog#home — a link to
+// an element that doesn't exist on that page, which silently did nothing.
+// The sections all live on the home page, so the links have to say so.
 const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Menu", href: "#menu" },
-  { label: "Loyalty", href: "#loyalty" },
+  { label: "Home", href: "/#home" },
+  { label: "Menu", href: "/#menu" },
+  { label: "Loyalty", href: "/#loyalty" },
   { label: "Events", href: "/events-planning-in-qatar" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Which pill GooeyNav should light up. Only the items that are real routes
+  // can be matched against the path; the "/#..." ones are all home-page
+  // sections, so anything unmatched falls back to Home.
+  const routeIndex = navItems.findIndex(
+    (item) => !item.href.startsWith("/#") && pathname.startsWith(item.href),
+  );
+  const activeIndex = routeIndex === -1 ? 0 : routeIndex;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -34,16 +48,22 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link href="#home" className="flex items-center gap-3 transition-transform duration-300 hover:scale-105">
+        <Link href="/" className="flex items-center gap-3 transition-transform duration-300 hover:scale-105">
           {/* Logo steps down on small phones so it never crowds the hamburger at 320px. */}
           <Image src="/whitelogo.webp" alt="Tea Social Cafe" width={160} height={40} priority className="h-auto w-[130px] drop-shadow-md sm:w-[150px] lg:w-[160px]" />
         </Link>
 
         {/* The full GooeyNav + contact pill only fit comfortably from ~1024px, so
             tablets (768–1023px) keep the clean hamburger layout below. */}
+        {/* GooeyNav seeds its highlight from initialActiveIndex once and then
+            owns it, so in-page clicks animate normally. Keying on the
+            route-derived index re-seeds it on an actual navigation, which is
+            the only time the current page disagrees with the highlight. */}
         <div className="hidden lg:flex">
           <GooeyNav
+            key={activeIndex}
             items={navItems}
+            initialActiveIndex={activeIndex}
             particleCount={12}
             particleDistances={[80, 12]}
             particleR={90}
