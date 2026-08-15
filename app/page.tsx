@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Hero from "./components/Hero";
 import BrewingStrip from "./components/BrewingStrip";
 import Featured from "./components/Featured";
+import DrinkShowcase from "./components/DrinkShowcase";
 import Loyalty from "./components/Loyalty";
 import EventForm from "./components/EventForm";
 import Contact from "./components/Contact";
@@ -60,6 +61,7 @@ export default function Home() {
       <Hero />
       <BrewingStrip />
       <Featured />
+      <DrinkShowcase />
       <Loyalty />
       <EventForm />
       <Contact />

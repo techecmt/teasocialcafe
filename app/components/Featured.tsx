@@ -1,11 +1,16 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
 import FrameText from "./FrameText";
+import ProductVideo from "./ProductVideo";
 
+// `video` is optional on purpose: the clips we have are all drinks, so only
+// the bubble tea card has one that honestly matches its category. The other
+// two stay as stills rather than being illustrated with the wrong product.
 const items = [
   {
     title: "Signature Bubble Tea",
     img: "/BubbleTea-Section-1.png",
+    video: "chocolate-milk-tea",
     desc: "Chewy pearls, creamy blends, pure joy.",
   },
   {
@@ -34,12 +39,23 @@ export default function Featured() {
           <Reveal key={it.title} delay={(i % 3) as 0 | 1 | 2 | 3}>
             <div className="hover-lift group overflow-hidden rounded-2xl border border-black/5 bg-white shadow-sm transition-shadow hover:shadow-xl hover:shadow-(--brand)/15 dark:border-white/10 dark:bg-zinc-950">
               <div className="relative aspect-4/3 overflow-hidden">
-                <Image
-                  src={it.img}
-                  alt={it.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+                {it.video ? (
+                  <ProductVideo
+                    slug={it.video}
+                    poster={it.img}
+                    trigger="hover"
+                    sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <Image
+                    src={it.img}
+                    alt={it.title}
+                    fill
+                    sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                )}
                 <div className="absolute inset-x-0 bottom-0 h-1 bg-linear-to-r from-(--brand) to-(--brand-accent)" />
               </div>
               <div className="p-4">

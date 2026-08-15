@@ -1,7 +1,7 @@
 import Reveal from "./Reveal";
 import CircularText from "./CircularText";
 import FrameText from "./FrameText";
-import BobaPit from "./BobaPit";
+import ProductVideo from "./ProductVideo";
 
 export default function Hero() {
   return (
@@ -13,11 +13,16 @@ export default function Hero() {
       className="relative isolate -mt-[72px] flex min-h-[88svh] items-center overflow-hidden pt-[72px]"
       aria-label="Hero"
     >
-      {/* Layered background: warm tea gradient → bouncing boba pearls → scrim */}
+      {/* Layered background: warm tea gradient → drink loop → scrim.
+          The gradient is the paint of last resort — it covers the moment
+          before the poster decodes, and any letterboxing on very wide or very
+          tall viewports. The scrim is heavier than a still image would need,
+          because the clip's own highlights move under the headline. */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-linear-to-br from-[#241308] via-[#3a2113] to-[#0d0906]" />
-        <BobaPit className="absolute inset-0" />
-        <div className="absolute inset-0 bg-black/30" />
+        <ProductVideo slug="taiwanese-boba" priority className="absolute inset-0" />
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-black/40" />
       </div>
 
       <div className="pointer-events-none absolute right-3 bottom-3 z-10 md:right-12 md:bottom-12">

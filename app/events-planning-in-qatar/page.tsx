@@ -22,6 +22,7 @@ import {
 import Reveal from "../components/Reveal";
 import FrameText from "../components/FrameText";
 import EventForm from "../components/EventForm";
+import ProductVideo from "../components/ProductVideo";
 import StatCounter from "./StatCounter";
 import EventTypeTabs from "./EventTypeTabs";
 import FaqAccordion, { type Faq } from "./FaqAccordion";
@@ -161,9 +162,12 @@ export default function EventsPlanningPage() {
 
       {/* ---------------------------------------------------------------- Hero */}
       <section className="relative isolate -mt-[72px] flex min-h-[78svh] items-center overflow-hidden pt-[72px]">
+        {/* The brand-teal wash is a little lighter than it was over the static
+            photo, so the clip underneath actually reads while the headline
+            keeps its contrast. */}
         <div className="absolute inset-0 -z-10">
-          <Image src="/HeroImage.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
-          <div className="absolute inset-0 bg-linear-to-br from-[#062b2a]/95 via-[#0e1413]/85 to-black/85" />
+          <ProductVideo slug="dirty-brown-sugar" priority className="absolute inset-0" />
+          <div className="absolute inset-0 bg-linear-to-br from-[#062b2a]/85 via-[#0e1413]/75 to-black/85" />
         </div>
 
         {/* Floating decorative party icons */}
