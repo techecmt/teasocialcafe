@@ -19,13 +19,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { BUSINESS } from "@/lib/seo";
-import {
-  addDays,
-  formatDate,
-  formatTime,
-  sendBooking,
-  toDateInput,
-} from "./booking";
+import { submitToWeb3Forms } from "@/lib/web3forms";
+import { addDays, formatDate, formatTime, toDateInput } from "./booking";
 import { cardBase, cardFeatured } from "./cardStyles";
 import { chipClass, fieldClass, labelClass } from "./formStyles";
 import Sheet, { SHEET_BG } from "./Sheet";
@@ -104,7 +99,7 @@ export default function BookingSheet() {
     setError("");
 
     try {
-      await sendBooking({
+      await submitToWeb3Forms({
         subject: `Table booking — ${guestLabel} guests, ${formatDate(date)} at ${formatTime(time)}`,
         from_name: "Tea Social Cafe — links page",
         botcheck,

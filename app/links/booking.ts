@@ -1,10 +1,4 @@
-/** Shared plumbing for the two booking sheets on /links. */
-
-// Web3Forms access keys are public by design (the request is made from the
-// browser); the env var just makes it swappable per deployment. Same key as
-// the events enquiry form, so every request lands in the same inbox.
-const WEB3FORMS_ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "895002bb-0b41-4545-98a0-694c8cdd3290";
+/** Date and time helpers shared by the two booking sheets on /links. */
 
 /** `YYYY-MM-DD` in the visitor's own timezone — `toISOString()` would shift the day. */
 export function toDateInput(date: Date) {
@@ -34,16 +28,4 @@ export function formatTime(value: string) {
   const suffix = h >= 12 ? "PM" : "AM";
   const hour = h % 12 === 0 ? 12 : h % 12;
   return `${hour}:${String(m).padStart(2, "0")} ${suffix}`;
-}
-
-/** Posts a booking to Web3Forms. Throws if the request or the API rejects it. */
-export async function sendBooking(fields: Record<string, unknown>) {
-  const res = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ access_key: WEB3FORMS_ACCESS_KEY, ...fields }),
-  });
-
-  const data = await res.json();
-  if (!res.ok || !data.success) throw new Error(data.message ?? "Submission failed");
 }

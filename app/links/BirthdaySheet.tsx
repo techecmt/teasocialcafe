@@ -18,7 +18,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { BUSINESS } from "@/lib/seo";
-import { addDays, formatDate, formatTime, sendBooking, toDateInput } from "./booking";
+import { submitToWeb3Forms } from "@/lib/web3forms";
+import { addDays, formatDate, formatTime, toDateInput } from "./booking";
 import { chipClass, fieldClass, labelClass } from "./formStyles";
 import Sheet, { SHEET_BG } from "./Sheet";
 import { trackLinkClick } from "./track";
@@ -124,7 +125,7 @@ export default function BirthdaySheet() {
     setError("");
 
     try {
-      await sendBooking({
+      await submitToWeb3Forms({
         subject: `Birthday booking — ${celebrant}, ${guestLabel} guests on ${formatDate(date)}`,
         from_name: "Tea Social Cafe — links page",
         botcheck,

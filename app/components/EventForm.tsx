@@ -19,6 +19,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import FrameText from "./FrameText";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 
 const contacts = [
   { icon: MapPin, title: "Physical Address", lines: ["Building 8 (Mirage Residence), Street 880", "Doha, Qatar"] },
@@ -33,11 +34,6 @@ const categories = [
   { label: "College Event", icon: GraduationCap },
   { label: "Others", icon: Sparkles },
 ];
-
-// Web3Forms access keys are public by design (the request is made from the
-// browser); the env var just makes it swappable per deployment.
-const WEB3FORMS_ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "895002bb-0b41-4545-98a0-694c8cdd3290";
 
 export default function EventForm() {
   const [persons, setPersons] = useState(10);
@@ -70,26 +66,18 @@ export default function EventForm() {
     setError("");
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `Event enquiry — ${eventType} for ${guests} guests`,
-          from_name: "Tea Social Cafe website",
-          botcheck,
-          name,
-          email,
-          phone: phone || "Not provided",
-          guests,
-          event_type: eventType,
-          preferred_date: date || "Not specified",
-          message: message.trim() || "No additional details",
-        }),
+      await submitToWeb3Forms({
+        subject: `Event enquiry — ${eventType} for ${guests} guests`,
+        from_name: "Tea Social Cafe website",
+        botcheck,
+        name,
+        email,
+        phone: phone || "Not provided",
+        guests,
+        event_type: eventType,
+        preferred_date: date || "Not specified",
+        message: message.trim() || "No additional details",
       });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) throw new Error(data.message ?? "Submission failed");
       setSent(true);
     } catch {
       setError(
