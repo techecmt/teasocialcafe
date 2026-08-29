@@ -26,10 +26,33 @@
 
 const ENDPOINT = "https://api.web3forms.com/submit";
 
-// Access keys are public by design (the request is made from the browser);
-// the env var just makes it swappable per deployment.
-const WEB3FORMS_ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "895002bb-0b41-4545-98a0-694c8cdd3290";
+/**
+ * One access key per form, so each kind of request lands in its own Web3Forms
+ * inbox instead of everything arriving as one undifferentiated stream.
+ *
+ * Keys are public by design — the request is made from the browser and the key
+ * is visible in the bundle either way — so they are checked in as defaults,
+ * with an env var per form for swapping one per deployment. The env lookups
+ * are written out literally because Next inlines NEXT_PUBLIC_* at build time
+ * by matching the source text; a computed `process.env[name]` would be
+ * undefined in the browser.
+ */
+const ORIGINAL_KEY = "895002bb-0b41-4545-98a0-694c8cdd3290";
+
+const FORM_KEYS = {
+  /** Table reservations from /links. */
+  table:
+    process.env.NEXT_PUBLIC_WEB3FORMS_KEY_TABLE ?? "a9620714-0015-4fbf-8fca-72fa6d0ee633",
+  /* TODO(owner): birthday parties still share the original form. Create a
+     third form in Web3Forms and put its key here (or in
+     NEXT_PUBLIC_WEB3FORMS_KEY_BIRTHDAY) to split them out. */
+  birthday: process.env.NEXT_PUBLIC_WEB3FORMS_KEY_BIRTHDAY ?? ORIGINAL_KEY,
+  /** Event enquiries from the home and events pages. */
+  events: process.env.NEXT_PUBLIC_WEB3FORMS_KEY_EVENTS ?? ORIGINAL_KEY,
+} as const;
+
+/** Which form — and therefore which inbox — a submission belongs to. */
+export type Web3FormsForm = keyof typeof FORM_KEYS;
 
 /** How long to wait for the fallback iframe before assuming it landed. */
 const FALLBACK_TIMEOUT_MS = 12_000;
@@ -40,19 +63,22 @@ const FALLBACK_TIMEOUT_MS = 12_000;
  * The honeypot follows checkbox semantics: an unticked box is never submitted,
  * and the string "false" would read as a tick.
  */
-function entries(fields: Record<string, unknown>) {
+function entries(form: Web3FormsForm, fields: Record<string, unknown>) {
   return [
-    ["access_key", WEB3FORMS_ACCESS_KEY] as const,
+    ["access_key", FORM_KEYS[form]] as const,
     ...Object.entries(fields)
       .filter(([key, value]) => !(key === "botcheck" && !value))
       .map(([key, value]) => [key, String(value)] as const),
   ];
 }
 
-/** Posts one submission. Throws if the API itself rejects it. */
-export async function submitToWeb3Forms(fields: Record<string, unknown>) {
+/** Posts one submission to the given form. Throws if the API rejects it. */
+export async function submitToWeb3Forms(
+  form: Web3FormsForm,
+  fields: Record<string, unknown>,
+) {
   const body = new FormData();
-  for (const [key, value] of entries(fields)) body.append(key, value);
+  for (const [key, value] of entries(form, fields)) body.append(key, value);
 
   try {
     const res = await fetch(ENDPOINT, { method: "POST", body });
@@ -62,11 +88,11 @@ export async function submitToWeb3Forms(fields: Record<string, unknown>) {
     // Only a blocked/failed request is worth retrying. An API rejection is a
     // real answer — retrying it through the iframe would send it twice.
     if (!(error instanceof TypeError)) throw error;
-    await submitViaHiddenForm(fields);
+    await submitViaHiddenForm(form, fields);
   }
 }
 
-function submitViaHiddenForm(fields: Record<string, unknown>) {
+function submitViaHiddenForm(form: Web3FormsForm, fields: Record<string, unknown>) {
   return new Promise<void>((resolve, reject) => {
     if (typeof document === "undefined") {
       reject(new Error("No document to submit from"));
@@ -80,17 +106,17 @@ function submitViaHiddenForm(fields: Record<string, unknown>) {
     iframe.setAttribute("aria-hidden", "true");
     iframe.style.display = "none";
 
-    const form = document.createElement("form");
-    form.action = ENDPOINT;
-    form.method = "POST";
-    form.target = target;
-    form.style.display = "none";
-    for (const [key, value] of entries(fields)) {
+    const element = document.createElement("form");
+    element.action = ENDPOINT;
+    element.method = "POST";
+    element.target = target;
+    element.style.display = "none";
+    for (const [key, value] of entries(form, fields)) {
       const input = document.createElement("input");
       input.type = "hidden";
       input.name = key;
       input.value = value;
-      form.append(input);
+      element.append(input);
     }
 
     let settled = false;
@@ -98,7 +124,7 @@ function submitViaHiddenForm(fields: Record<string, unknown>) {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
-      form.remove();
+      element.remove();
       iframe.remove();
       resolve();
     };
@@ -114,11 +140,11 @@ function submitViaHiddenForm(fields: Record<string, unknown>) {
       "load",
       () => {
         iframe.addEventListener("load", finish, { once: true });
-        form.submit();
+        element.submit();
       },
       { once: true },
     );
 
-    document.body.append(iframe, form);
+    document.body.append(iframe, element);
   });
 }

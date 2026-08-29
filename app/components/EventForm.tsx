@@ -66,7 +66,7 @@ export default function EventForm() {
     setError("");
 
     try {
-      await submitToWeb3Forms({
+      await submitToWeb3Forms("events", {
         subject: `Event enquiry — ${eventType} for ${guests} guests`,
         from_name: "Tea Social Cafe website",
         botcheck,

@@ -125,7 +125,7 @@ export default function BirthdaySheet() {
     setError("");
 
     try {
-      await submitToWeb3Forms({
+      await submitToWeb3Forms("birthday", {
         subject: `Birthday booking — ${celebrant}, ${guestLabel} guests on ${formatDate(date)}`,
         from_name: "Tea Social Cafe — links page",
         botcheck,

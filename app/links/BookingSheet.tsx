@@ -99,7 +99,7 @@ export default function BookingSheet() {
     setError("");
 
     try {
-      await submitToWeb3Forms({
+      await submitToWeb3Forms("table", {
         subject: `Table booking — ${guestLabel} guests, ${formatDate(date)} at ${formatTime(time)}`,
         from_name: "Tea Social Cafe — links page",
         botcheck,
