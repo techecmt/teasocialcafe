@@ -2,8 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Sansita_Swashed, Lexend_Zetta } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import SiteChrome from "./components/SiteChrome";
 import {
   SITE_URL,
   BUSINESS,
@@ -135,9 +134,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             />
           </noscript>
         )}
-        <Navbar />
-        <main className="min-h-screen pt-[72px]">{children}</main>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

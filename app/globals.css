@@ -304,3 +304,89 @@ body {
 .dark .article li a { color: var(--brand-accent); }
 .dark .article p a:hover,
 .dark .article li a:hover { color: #fff; }
+
+/* -------------------------------------------------------------------------- */
+/* Birthday booking flourishes (/links)                                       */
+/* -------------------------------------------------------------------------- */
+/* Cakes drifting up, party lights blinking and a sheen crossing the card.     */
+/* Every keyframe animates transform/opacity/filter only, so the browser keeps */
+/* it on the compositor and never reflows the page behind it. All of it is     */
+/* switched off under prefers-reduced-motion at the bottom of this block.      */
+
+/* Animating a conic gradient's angle needs the custom property to be typed,
+   otherwise it is just a string and jumps instead of sweeping. Browsers
+   without @property support (Safari < 16.4) simply get the static ring. */
+@property --bd-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes bd-rotate {
+  to { --bd-angle: 360deg; }
+}
+
+/* Gentle bob for the icons pinned inside the trigger card. */
+@keyframes bd-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-7deg); }
+  50% { transform: translate3d(0, -13px, 0) rotate(7deg); }
+}
+
+/* Cakes and balloons rising through the sheet header and fading out. */
+@keyframes bd-rise {
+  0% { transform: translate3d(0, 40%, 0) scale(0.85) rotate(-10deg); opacity: 0; }
+  20% { opacity: 0.9; }
+  75% { opacity: 0.55; }
+  100% { transform: translate3d(0, -220%, 0) scale(1.1) rotate(12deg); opacity: 0; }
+}
+
+/* Party bulbs: brightness and glow, staggered by inline delays. */
+@keyframes bd-twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* A single highlight sweeping across the card, like light off foil. */
+@keyframes bd-sheen {
+  0% { transform: translateX(-130%) skewX(-20deg); }
+  55%, 100% { transform: translateX(260%) skewX(-20deg); }
+}
+
+/* Candle flicker for the cake on the trigger card. */
+@keyframes bd-flicker {
+  0%, 100% { opacity: 0.55; filter: blur(6px); }
+  40% { opacity: 1; filter: blur(9px); }
+  70% { opacity: 0.7; filter: blur(7px); }
+}
+
+/* Rotating gradient ring. The element is a 1.5px-padded wrapper; the card
+   inside paints its own opaque background over all but the border. */
+.bd-ring {
+  background: conic-gradient(
+    from var(--bd-angle),
+    var(--brand-accent),
+    #ff8fc7,
+    #7ee8dc,
+    var(--brand-accent)
+  );
+  animation: bd-rotate 6s linear infinite;
+}
+
+.bd-float { animation: bd-float 5s ease-in-out infinite; }
+.bd-rise { animation: bd-rise 9s linear infinite; }
+.bd-twinkle { animation: bd-twinkle 2.2s ease-in-out infinite; }
+.bd-sheen { animation: bd-sheen 5s ease-in-out infinite; }
+.bd-flicker { animation: bd-flicker 1.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-ring,
+  .bd-float,
+  .bd-rise,
+  .bd-twinkle,
+  .bd-sheen,
+  .bd-flicker {
+    animation: none;
+  }
+  /* Still a party, just a still one. */
+  .bd-rise { opacity: 0.5; }
+}
