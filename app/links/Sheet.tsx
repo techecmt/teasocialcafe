@@ -35,10 +35,20 @@ export default function Sheet({
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
 
+  // Callers pass an inline arrow, so `onClose` is a new function on every
+  // render. Depending on it directly re-ran the effect on each keystroke, and
+  // the `focus()` below then yanked focus out of whatever field was being
+  // typed in — one character per tap. Reading it through a ref keeps the
+  // effect keyed on `open` alone, so focus moves exactly once, on open.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onCloseRef.current();
     };
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -48,7 +58,7 @@ export default function Sheet({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKey);
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
 
