@@ -48,6 +48,11 @@ export const LINK_GROUPS: LinkGroup[] = [
     heading: "Online Delivery Platforms",
     items: [
       {
+        title: "Keeta",
+        href: "https://m.mykeeta.com/marketing/applaunch/index.html?inner_url=sailorc%3A%2F%2Fkeeta.com%2FmarketTransfer%2Fmachpro%3Fmach_bundle_name%3Dmach_pro_sailor_c_shop%26shopId%3D1329595412%26channel%3Dbd",
+        logo: { src: "/platform_icons/keeta-logo.png", alt: "Keeta" },
+      },
+      {
         title: "Talabat",
         note: "Free delivery for Pro+",
         href: "https://www.talabat.com/qatar/tea-social-cafe",
@@ -58,11 +63,6 @@ export const LINK_GROUPS: LinkGroup[] = [
         note: "Free delivery",
         href: "https://snoonu.com/restaurants/tea-social-cafe",
         logo: { src: "/platform_icons/snoonu_logo.png", alt: "Snoonu" },
-      },
-      {
-        title: "Keeta",
-        href: "https://m.mykeeta.com/marketing/applaunch/index.html?inner_url=sailorc%3A%2F%2Fkeeta.com%2FmarketTransfer%2Fmachpro%3Fmach_bundle_name%3Dmach_pro_sailor_c_shop%26shopId%3D1329595412%26channel%3Dbd",
-        logo: { src: "/platform_icons/keeta-logo.png", alt: "Keeta" },
       },
     ],
   },
