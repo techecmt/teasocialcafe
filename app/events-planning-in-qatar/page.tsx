@@ -97,7 +97,7 @@ const testimonials = [
 const faqs: Faq[] = [
   {
     q: "How do I book an event at Tea Social Cafe?",
-    a: "Fill in the enquiry form on this page and it goes straight to our events team, or call us directly on +974 3030 3467. We'll get back to you to confirm availability and walk you through the options.",
+    a: "Fill in the enquiry form on this page and it goes straight to our events team, or call us directly on +974 5585 0343. We'll get back to you to confirm availability and walk you through the options.",
   },
   {
     q: "What types of events can you host?",
@@ -348,8 +348,8 @@ export default function EventsPlanningPage() {
             <a href="#book" className="hover-lift inline-flex items-center gap-2 rounded-full bg-(--brand-accent) px-6 py-3 font-semibold text-[#073231]">
               <Cake className="h-4 w-4" /> Start Your Booking
             </a>
-            <a href="tel:+97430303467" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 font-medium hover:bg-white/15">
-              <Phone className="h-4 w-4" /> +974 3030 3467
+            <a href="tel:+97455850343" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 font-medium hover:bg-white/15">
+              <Phone className="h-4 w-4" /> +974 5585 0343
             </a>
             <a href="mailto:info@teasocialcafe-qa.com" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 font-medium hover:bg-white/15">
               <Mail className="h-4 w-4" /> Email Us

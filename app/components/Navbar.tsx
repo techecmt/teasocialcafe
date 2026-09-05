@@ -74,7 +74,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 rounded-full bg-white/10 px-2 py-1 text-xs shadow-lg ring-1 ring-white/20 backdrop-blur-md lg:flex">
           <span className="hidden pl-2 text-[11px] text-zinc-200 lg:inline">Call or WhatsApp</span>
-          <a href="tel:+97430303467" className="hover-lift rounded-full bg-(--brand-accent) px-3 py-1.5 text-[11px] font-semibold text-[#073231]">+974 3030 3467</a>
+          <a href="tel:+97455850343" className="hover-lift rounded-full bg-(--brand-accent) px-3 py-1.5 text-[11px] font-semibold text-[#073231]">+974 5585 0343</a>
           <a href="mailto:info@teasocialcafe-qa.com" className="rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-medium text-zinc-100 hover:bg-white/15">Email</a>
         </div>
 
@@ -107,11 +107,11 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="tel:+97430303467"
+            href="tel:+97455850343"
             onClick={() => setMobileOpen(false)}
             className="hover-lift mt-2 rounded-full bg-(--brand-accent) px-4 py-2.5 text-center text-sm font-semibold text-[#073231]"
           >
-            Call +974 3030 3467
+            Call +974 5585 0343
           </a>
         </nav>
       </div>

@@ -23,7 +23,7 @@ import { submitToWeb3Forms } from "@/lib/web3forms";
 
 const contacts = [
   { icon: MapPin, title: "Physical Address", lines: ["Building 8 (Mirage Residence), Street 880", "Doha, Qatar"] },
-  { icon: Phone, title: "Phone Numbers", lines: ["+974 3030 3467"] },
+  { icon: Phone, title: "Phone Numbers", lines: ["+974 5585 0343"] },
   { icon: Mail, title: "Email Address", lines: ["info@teasocialcafe-qa.com"] },
 ];
 
@@ -81,7 +81,7 @@ export default function EventForm() {
       setSent(true);
     } catch {
       setError(
-        "We couldn't send your enquiry just now. Please try again, or call us on +974 3030 3467.",
+        "We couldn't send your enquiry just now. Please try again, or call us on +974 5585 0343.",
       );
     } finally {
       setSubmitting(false);

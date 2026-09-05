@@ -13,7 +13,7 @@ export default function Footer() {
         <div>
           <h4 className="mb-2 text-sm font-semibold tracking-wider text-zinc-600 dark:text-zinc-300">Contact</h4>
           <ul className="text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
-            <li>Phone: <a className="underline hover:text-black dark:hover:text-white" href="tel:+97430303467">+974 3030 3467</a></li>
+            <li>Phone: <a className="underline hover:text-black dark:hover:text-white" href="tel:+97455850343">+974 5585 0343</a></li>
             <li>Email: <a className="underline hover:text-black dark:hover:text-white" href="mailto:info@teasocialcafe-qa.com">info@teasocialcafe-qa.com</a></li>
             <li>Address: Building 8, Street 880, Mirage Residence, Doha, Qatar</li>
           </ul>

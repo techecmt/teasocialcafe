@@ -11,7 +11,7 @@ export default function Contact() {
             <span className="heading-accent" />
             <Reveal delay={1}>
               <ul className="mt-4 space-y-2 text-zinc-700 dark:text-zinc-300">
-                <li>Phone: <a className="underline" href="tel:+97430303467">+974 3030 3467</a></li>
+                <li>Phone: <a className="underline" href="tel:+97455850343">+974 5585 0343</a></li>
                 <li>Email: <a className="underline" href="mailto:info@teasocialcafe-qa.com">info@teasocialcafe-qa.com</a></li>
                 <li>Address: Building 8, Street 880, Mirage Residence, Doha, Qatar</li>
               </ul>
@@ -19,7 +19,7 @@ export default function Contact() {
             <Reveal delay={2}>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href="https://maps.google.com/?q=Building%208%2C%20Street%20880%2C%20Mirage%20Residence%2C%20Doha%2C%20Qatar" target="_blank" rel="noreferrer" className="hover-lift rounded-full bg-(--brand) px-5 py-3 font-medium text-white">Open in Maps</a>
-                <a href="tel:+97430303467" className="rounded-full border border-black/10 px-5 py-3 font-medium dark:border-white/20">Call</a>
+                <a href="tel:+97455850343" className="rounded-full border border-black/10 px-5 py-3 font-medium dark:border-white/20">Call</a>
               </div>
             </Reveal>
           </div>

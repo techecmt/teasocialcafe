@@ -15,9 +15,9 @@ export const BUSINESS = {
   tagline: "Doha's original bubble tea café",
   description:
     "Authentic bubble tea, specialty coffee and fresh snacks in the heart of Doha, Qatar. Visit Tea Social Cafe at Mirage Residence for handcrafted boba, craft coffee and a warm social spot.",
-  telephone: "+974 3030 3467",
+  telephone: "+974 5585 0343",
   /* WhatsApp booking uses the same number (digits only) for wa.me links. */
-  whatsapp: "97430303467",
+  whatsapp: "97455850343",
   email: "info@teasocialcafe-qa.com",
   address: {
     streetAddress: "Building 8 (Mirage Residence), Street 880",
