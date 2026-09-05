@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 const socials = [
-  { label: "Facebook", href: "https://www.facebook.com/Teasocialcafe", Icon: Facebook },
+  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61577651706119", Icon: Facebook },
   /* TODO(owner): swap in the real Instagram handle, then add it to
      BUSINESS.sameAs in lib/seo.ts so the profile counts as an entity signal.
      Remove this entry until then rather than shipping a dead link. */
