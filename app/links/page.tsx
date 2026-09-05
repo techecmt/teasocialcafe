@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, ExternalLink, Facebook, MapPin, Phone } from "lucide-react";
+import { Clock, ExternalLink, Facebook, Instagram, MapPin, Phone } from "lucide-react";
 import { BUSINESS, SITE_URL } from "@/lib/seo";
 import BirthdaySheet from "./BirthdaySheet";
 import BookingSheet from "./BookingSheet";
@@ -28,9 +28,7 @@ export const metadata: Metadata = {
 
 const socials = [
   { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61577651706119", Icon: Facebook },
-  /* TODO(owner): swap in the real Instagram handle, then add it to
-     BUSINESS.sameAs in lib/seo.ts so the profile counts as an entity signal.
-     Remove this entry until then rather than shipping a dead link. */
+  { label: "Instagram", href: "https://www.instagram.com/teasocialcafe.qa/", Icon: Instagram },
 ];
 
 /* Applied to the copy that sits directly on the video rather than on a card. */

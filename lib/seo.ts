@@ -35,9 +35,12 @@ export const BUSINESS = {
      Left null on purpose: a mis-placed map pin hurts local SEO more than a
      missing one. Once set, schema `geo` is emitted automatically. */
   geo: null as { latitude: number; longitude: number } | null,
-  /* Verified-looking official profile. Add Instagram / TikTok / Snapchat URLs
-     here to strengthen local entity signals. */
-  sameAs: ["https://www.facebook.com/Teasocialcafe"],
+  /* Verified-looking official profile. Add TikTok / Snapchat URLs here too,
+     as they're confirmed, to strengthen local entity signals. */
+  sameAs: [
+    "https://www.facebook.com/profile.php?id=61577651706119",
+    "https://www.instagram.com/teasocialcafe.qa/",
+  ],
   priceRange: "$$",
   currenciesAccepted: "QAR",
   servesCuisine: ["Bubble Tea", "Coffee", "Snacks"],
