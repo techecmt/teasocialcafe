@@ -19,7 +19,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import FrameText from "./FrameText";
-import { submitToWeb3Forms } from "@/lib/web3forms";
+import { submitBooking } from "@/lib/bookings";
 
 const contacts = [
   { icon: MapPin, title: "Physical Address", lines: ["Building 8 (Mirage Residence), Street 880", "Doha, Qatar"] },
@@ -66,7 +66,7 @@ export default function EventForm() {
     setError("");
 
     try {
-      await submitToWeb3Forms("events", {
+      await submitBooking("events", {
         subject: `Event enquiry — ${eventType} for ${guests} guests`,
         from_name: "Tea Social Cafe website",
         botcheck,

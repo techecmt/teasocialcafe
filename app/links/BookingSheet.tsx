@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { BUSINESS } from "@/lib/seo";
-import { submitToWeb3Forms } from "@/lib/web3forms";
+import { submitBooking } from "@/lib/bookings";
 import { addDays, formatDate, formatTime, toDateInput } from "./booking";
 import { cardBase, cardFeatured } from "./cardStyles";
 import { chipClass, fieldClass, labelClass } from "./formStyles";
@@ -48,7 +48,7 @@ const OCCASIONS = [
  * Table reservations, taken in-page.
  *
  * A card that opens a bottom sheet (a centred card from `sm` up) and emails the
- * request through Web3Forms — the same endpoint and inbox as the events form,
+ * request through /api/booking — the same route and inbox as the events form,
  * so nothing new has to be monitored. Keeping it in-page matters here: this is
  * a link-in-bio page opened from Instagram's in-app browser, where bouncing to
  * a third-party form host is where bookings quietly get lost.
@@ -99,7 +99,7 @@ export default function BookingSheet() {
     setError("");
 
     try {
-      await submitToWeb3Forms("table", {
+      await submitBooking("table", {
         subject: `Table booking — ${guestLabel} guests, ${formatDate(date)} at ${formatTime(time)}`,
         from_name: "Tea Social Cafe — links page",
         botcheck,

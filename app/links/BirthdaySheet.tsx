@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { BUSINESS } from "@/lib/seo";
-import { submitToWeb3Forms } from "@/lib/web3forms";
+import { submitBooking } from "@/lib/bookings";
 import { addDays, formatDate, formatTime, toDateInput } from "./booking";
 import { chipClass, fieldClass, labelClass } from "./formStyles";
 import Sheet, { SHEET_BG } from "./Sheet";
@@ -67,7 +67,7 @@ const RISERS = [
 /**
  * Birthday party bookings, taken in-page.
  *
- * Same Web3Forms pipeline as the table sheet and the events page form, but the
+ * Same submission pipeline as the table sheet and the events page form, but the
  * card is deliberately the loudest thing on /links: a rotating gradient ring,
  * floating cakes, blinking party bulbs and a sheen sweeping across it. A
  * birthday is the highest-value booking the café takes, so it gets to shout —
@@ -125,7 +125,7 @@ export default function BirthdaySheet() {
     setError("");
 
     try {
-      await submitToWeb3Forms("birthday", {
+      await submitBooking("birthday", {
         subject: `Birthday booking — ${celebrant}, ${guestLabel} guests on ${formatDate(date)}`,
         from_name: "Tea Social Cafe — links page",
         botcheck,
